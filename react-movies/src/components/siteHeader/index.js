@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -11,12 +11,15 @@ import { useNavigate } from "react-router-dom";
 import { styled } from '@mui/material/styles';
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { AuthContext } from "../../contexts/authContext";
+import { login } from "../../api/movies-api";
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 const SiteHeader = ({ history }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const {isAuthenticated, userName,signout} = useContext(AuthContext);
 
   const theme = useTheme();
 
@@ -37,6 +40,8 @@ const SiteHeader = ({ history }) => {
     { label: "Watchlist ", path: "/movies/watchlist" },
   ];
 
+  
+
   const handleMenuSelect = (pageURL) => {
     navigate(pageURL, { replace: true });
   };
@@ -45,6 +50,18 @@ const SiteHeader = ({ history }) => {
     setAnchorEl(event.currentTarget);
   };
 
+  const UserName= () =>{
+    if (isAuthenticated) {
+      return <li> Welcome, {userName}
+      <Button onClick={signout} color="secondary">Sign Out</Button></li>
+    }else{
+      return(
+      <li>
+        <Button onClick={() => navigate("/movies/loginPage")} color="secondary">Login</Button>
+        </li>
+      );
+    }
+  }
  
   return (
     <>
@@ -56,6 +73,9 @@ const SiteHeader = ({ history }) => {
           </Typography>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             Movies For You
+          </Typography>
+          <Typography>
+          <UserName/>
           </Typography>
             
               
