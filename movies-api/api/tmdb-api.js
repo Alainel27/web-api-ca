@@ -18,6 +18,7 @@ export const getUpcomingMovies = async () => {
     }
 };
 
+
 export const getGenresMovies = async () => {
     try {
         const response = await fetch(
