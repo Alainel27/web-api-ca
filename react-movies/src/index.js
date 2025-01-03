@@ -59,6 +59,7 @@ const App = () => {
             <Route path="/" element={<HomePage />} />
             <Route path="*" element={ <Navigate to="/" /> } />
             <Route path="/reviews/form" element={ <AddMovieReviewPage /> } />
+            
           </Routes>
         </MoviesContextProvider>
         </AuthContextProvider>
