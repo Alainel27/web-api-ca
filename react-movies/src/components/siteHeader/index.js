@@ -20,11 +20,11 @@ const SiteHeader = ({ history }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const {isAuthenticated, userName,signout} = useContext(AuthContext);
+  const context = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const theme = useTheme();
 
-  
-  const navigate = useNavigate();
 
   const menuOptions = [
     { label: "Home", path: "/" },
@@ -62,9 +62,23 @@ const SiteHeader = ({ history }) => {
       );
     }
   }
+
+  const LoggedIn = () =>{
+    context.isAuthenticated ? (
+      <p>
+        Welcome {context.userName}! <button onClick={() => context.signout()}>Sign out</button>
+      </p>
+    ) : (
+      <p>
+        You are not logged in{" "}
+        <button onClick={() => navigate('/login')}>Login</button>
+      </p>
+    );
+  }
  
   return (
     <>
+    <LoggedIn/>
    
       <AppBar position="static" color="primary">
         <Toolbar >
